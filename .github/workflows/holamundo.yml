@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-    schedules:
-      - cron: '0 8 * * 1-5' # Cada día a la medianoche  
+  schedule:
+    - cron: '0 8 * * 1-5' # Cada día a las 8:00 AM de lunes a viernes
 
 
 jobs:
