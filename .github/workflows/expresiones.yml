@@ -22,6 +22,7 @@ jobs:
         run: echo "Hola ${{ inputs.nombre }} eres mayor de edad"
       - name: validar edad
         run: echo "Tu edad es ${{ inputs.edad }}"
+  menor:      
     if: ${{ inputs.edad < 18 }} 
     runs-on: ubuntu-latest
     steps:
