@@ -15,7 +15,7 @@ on:
         type: string  
 jobs:  
   mayor:
-    if: ${{ inputs.edad >=18 }}
+    if: ${{ inputs.edad >= 18 }}
     runs-on: ubuntu-latest
     steps:
       - name: validar nombre
@@ -28,4 +28,5 @@ jobs:
     steps:
       - name: validar nombre
         run: echo "Hola ${{ inputs.nombre }} eres menor de edad"
-      
+      - name: validar edad
+        run: echo "Tu edad es ${{ inputs.edad }}"
