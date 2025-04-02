@@ -1,0 +1,72 @@
+name: Explorando Contextos
+on:
+  workflow_dispatch:
+    inputs:
+      ejemplo_input:
+        description: 'Ejemplo de entrada'
+        required: true
+        default: 'Valor por defecto'
+
+jobs:
+    opciones-de-contexto:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Definir variable de entorno
+              run: |
+                echo "REF=${{ github.ref }}"
+                echo "SHA=${{ github.sha }}"
+                echo "ACTOR=${{ github.actor }}"
+                echo "REPOSITORY=${{ github.repository }}"
+                echo "EVENT_NAME=${{ github.event_name }}"
+                echo "WORKFLOW=${{ github.workflow }}"
+                echo "RUN_ID=${{ github.run_id }}"
+                echo "RUN_NUMBER=${{ github.run_number }}"
+                echo "GITHUB_ENV=${{ github.env }}"
+                echo "GITHUB_PATH=${{ github.path }}"
+                echo "GITHUB_WORKSPACE=${{ github.workspace }}"
+                echo "GITHUB_ACTION=${{ github.action }}"
+                echo "GITHUB_RUN_ID=${{ github.run_id }}"
+                echo "GITHUB_RUN_NUMBER=${{ github.run_number }}"
+                echo "GITHUB_REPOSITORY=${{ github.triggering_actor }}"
+            - name: Imprimir variables de entorno
+              run: |
+                echo "REF=${{ env.REF }}"
+                echo "SHA=${{ env.SHA }}"
+                echo "ACTOR=${{ env.ACTOR }}"
+                echo "REPOSITORY=${{ env.REPOSITORY }}"
+                echo "EVENT_NAME=${{ env.EVENT_NAME }}"
+                echo "WORKFLOW=${{ env.WORKFLOW }}"
+                echo "RUN_ID=${{ env.RUN_ID }}"
+                echo "RUN_NUMBER=${{ env.RUN_NUMBER }}"
+                echo "GITHUB_ENV=${{ env.GITHUB_ENV }}"
+                echo "GITHUB_PATH=${{ env.GITHUB_PATH }}"
+                echo "GITHUB_WORKSPACE=${{ env.GITHUB_WORKSPACE }}"
+                echo "GITHUB_ACTION=${{ env.GITHUB_ACTION }}"
+                echo "GITHUB_RUN_ID=${{ env.GITHUB_RUN_ID }}"
+                echo "GITHUB_RUN_NUMBER=${{ env.GITHUB_RUN_NUMBER }}"
+            - name: Contexto Vars
+              run: |
+                echo "VARIABLE_GLOBAL=${{ vars.MI_VARIABLE_GLOBAL }}" # Ejemplo de variable global
+            - name: Contexto Job
+              run: |
+                echo "JOB_NAME=${{ job.name }}"
+                echo "JOB_STATUS=${{ job.status }}"
+            - name: Contexto Steps
+              run: |
+                echo "STEP_NAME=${{ steps }}"
+                echo "STEP_RESULT=${{ steps.result }}"
+            - name: Contexto Runner
+              run: |
+                echo "RUNNER_NAME=${{ runner.name }}"
+                echo "RUNNER_OS=${{ runner.os }}"
+                echo "RUNNER_ARCH=${{ runner.arch }}"
+                echo "RUNNER_TEMP=${{ runner.temp }}"
+                echo "RUNNER_WORKSPACE=${{ runner.workspace }}"
+            - name: Contexto Secrets
+              run: |
+                echo "SECRET_EJEMPLO=${{ secrets.MI_SECRET }}" # Asegúrate de definir este secreto en tu repositorio u organización
+            - name: Contexto Inputs
+              run: |
+                echo "INPUT_EJEMPLO=${{ inputs.ejemplo_input }}"
