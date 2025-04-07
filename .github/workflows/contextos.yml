@@ -13,7 +13,7 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v3
-            - name: Definir variable de entorno
+            - name: github context
               run: |
                 echo "REF=${{ github.ref }}"
                 echo "SHA=${{ github.sha }}"
@@ -51,7 +51,6 @@ jobs:
                 echo "VARIABLE_GLOBAL=${{ vars.MI_VARIABLE_GLOBAL }}" # Ejemplo de variable global
             - name: Contexto Job
               run: |
-                echo "JOB_NAME=${{ job.name }}"
                 echo "JOB_STATUS=${{ job.status }}"
             - name: Contexto Steps
               run: |

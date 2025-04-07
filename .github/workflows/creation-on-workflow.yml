@@ -1,0 +1,10 @@
+name: Construyendo-mi-primer-workflow
+run-name: "Push iniciado por ${{ github.actor }} en ${{ github.ref_name }}" 
+on: [push]
+
+jobs:
+    definition-a-job:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - run: echo "Estoy ejecutando"
