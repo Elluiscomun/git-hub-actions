@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Imprimir información básica
-        run: echo "Ref actual: ${{ github.ref }}"
+        run: echo "Ref actual ${{ github.ref }}"
 
       - name: Usar formato dinámico
         run: echo "${{ format('El actor {0} ha hecho push en la rama {1}', github.actor, github.ref_name) }}"
