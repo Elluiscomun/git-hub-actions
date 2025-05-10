@@ -1,0 +1,24 @@
+name: Explorando uses
+run-name: "Ejecutado por ${{ github.actor }} usando actions"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  uso-de-actions:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Instalar dependencias del proyecto
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar aplicación
+        run: python src/main.py
