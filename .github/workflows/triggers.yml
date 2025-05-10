@@ -1,0 +1,40 @@
+name: Explorando Eventos
+run-name: "Ejecutado por ${{ github.actor }} debido a ${{ github.event_name }}"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, closed]
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      mensaje:
+        description: 'Mensaje de entrada'
+        required: false
+        default: 'Sin mensaje'
+  issues:
+    types: [opened, edited, closed]
+  release:
+    types: [published]
+
+jobs:
+  evento-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mostrar evento activador
+        run: echo "Evento: ${{ github.event_name }}"
+
+      - name: Mostrar tipo de evento específico
+        run: echo "Acción del evento: ${{ github.event.action || 'No aplica' }}"
+
+      - name: Mostrar actor y repositorio
+        run: |
+          echo "Actor: ${{ github.actor }}"
+          echo "Repositorio: ${{ github.repository }}"
+
+      - name: Mostrar mensaje de entrada (si existe)
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "Mensaje recibido: ${{ inputs.mensaje }}"
