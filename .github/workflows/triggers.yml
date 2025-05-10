@@ -25,10 +25,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Mostrar evento activador
-        run: echo "Evento: ${{ github.event_name }}"
+        run: |
+          echo "Evento: ${{ github.event_name }}"
 
       - name: Mostrar tipo de evento específico
-        run: echo "Acción del evento: ${{ github.event.action || 'No aplica' }}"
+        run: |
+          echo "Acción del evento: ${{ github.event.action || 'No aplica' }}"
 
       - name: Mostrar actor y repositorio
         run: |
@@ -37,4 +39,5 @@ jobs:
 
       - name: Mostrar mensaje de entrada (si existe)
         if: github.event_name == 'workflow_dispatch'
-        run: echo "Mensaje recibido: ${{ inputs.mensaje }}"
+        run: |
+          echo "Mensaje recibido: ${{ inputs.mensaje }}"
