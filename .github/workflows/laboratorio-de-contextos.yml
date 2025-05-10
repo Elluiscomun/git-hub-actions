@@ -1,0 +1,43 @@
+name: Explorando Contextos
+run-name: "Ejecutado por ${{ github.actor }} en la rama ${{ github.ref_name }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      ejemplo_input:
+        description: 'Parámetro de entrada'
+        required: true
+        default: 'Valor por defecto'
+
+jobs:
+  mostrar-contextos:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Mostrar contexto de GitHub
+        run: |
+          echo "Actor: ${{ github.actor }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+          echo "Repositorio: ${{ github.repository }}"
+          echo "Evento: ${{ github.event_name }}"
+          echo "Workflow: ${{ github.workflow }}"
+          echo "ID de ejecución: ${{ github.run_id }}"
+
+      - name: Mostrar información del runner
+        run: |
+          echo "Sistema operativo: ${{ runner.os }}"
+          echo "Arquitectura: ${{ runner.arch }}"
+          echo "Directorio temporal: ${{ runner.temp }}"
+
+      - name: Mostrar entrada manual (input)
+        run: echo "Input recibido ${{ inputs.ejemplo_input }}"
+
+      - name: Mostrar variable global (si existe)
+        run: echo "Variable global ${{ vars.MI_VARIABLE_GLOBAL }}"
+
+      - name: Mostrar secreto (si está definido)
+        run: echo "Secreto ${{ secrets.MI_SECRET }}"
+
+      - name: Mostrar estado del job
+        run: echo "Estado del job ${{ job.status }}"
