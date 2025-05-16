@@ -1,0 +1,66 @@
+name: CI-CD para app Python
+
+on:
+  push:
+    branches: [ "main" ]  # Evento: ejecuta en push a rama main
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:  
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:         # Pruebas en dos versiones de Python
+      matrix:
+        python-version: [3.9, 3.11]
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar pruebas
+        run: |
+          pytest
+
+  deploy:
+    needs: build-and-test    # No se ejecuta hasta que el job anterior termine bien
+    if: github.ref == 'refs/heads/main' && success()  # Contexto + condición
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Instalar AWS CLI
+        run: |
+          sudo apt-get install -y awscli
+
+      - name: Configurar credenciales AWS
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Desplegar a Elastic Beanstalk
+        run: |
+          zip -r app.zip . -x '*.git*'
+          aws elasticbeanstalk create-application-version \
+            --application-name mi-app-python \
+            --version-label v-${{ github.run_number }} \
+            --source-bundle S3Bucket="mi-bucket",S3Key="app.zip"
+
+          aws elasticbeanstalk update-environment \
+            --environment-name mi-entorno-python \
+            --version-label v-${{ github.run_number }}
