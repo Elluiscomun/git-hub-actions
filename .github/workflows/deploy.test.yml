@@ -14,27 +14,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Azure5 login
-        run: echo "${{ vars.AZURE_CREDENTIALS }} + $MI_VARIABLE_GLOBAL" 
-
-      - name: Login3
+      - name: Login
         uses: azure/login@v2
         with:
           creds: '{"clientId":"${{ secrets.AZURE_CLIENT_ID }}","clientSecret":"${{ secrets.AZURE_CLIENT_SECRET }}","subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.AZURE_TENANT_ID }}"}'
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'action'
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: .
-
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
