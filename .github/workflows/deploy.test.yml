@@ -16,11 +16,6 @@ jobs:
 
       - name: Azure5 login
         run: echo "${{ vars.AZURE_CREDENTIALS }} + $MI_VARIABLE_GLOBAL" 
-        
-      - name: Azure4 login
-        uses: azure/login@v2
-        with:
-          creds: ${{ vars.AZURE_CREDENTIALS }}  
 
       - name: Login3
         uses: azure/login@v2
