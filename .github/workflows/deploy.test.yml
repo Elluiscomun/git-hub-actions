@@ -8,7 +8,8 @@ env:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    environment: MI_VARIABLE_GLOBAL
+  
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
