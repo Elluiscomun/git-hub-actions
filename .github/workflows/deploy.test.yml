@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Azure5 login
-        run: echo env.AZURE_CREDENTIALS
+        run: echo ${{ env.AZURE_CREDENTIALS }} 
         
       - name: Azure4 login
         uses: azure/login@v2
